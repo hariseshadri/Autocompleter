@@ -1,0 +1,58 @@
+option java_generic_services = true;
+
+message User {
+	required string first_name = 1;
+	required string last_name = 2;
+	required string email = 3;
+	required string domain = 4;
+	required int64 times_recommended = 5;
+	required int64 uid = 6;
+}
+
+message Users {
+	repeated User users = 1;
+}
+
+message MatchedUser {
+
+	required User user = 1;
+
+	message HighlightIndices {
+		required int32 start = 1;
+		required int32 end = 2;
+	}
+
+	repeated HighlightIndices highlights = 2;
+
+	//0 - 1
+	required double score = 3;
+}
+
+message Status {
+	required int32 status_code = 1;
+	required string message = 2;
+}
+
+message MatchedUsers {
+	required Status status = 1;
+	repeated MatchedUser matchedUsers = 2;
+}
+
+message AutocompleteRequest {
+	required string typed = 1;
+	required string domain = 2;
+	required int32 num_responses = 3;
+}
+
+message DeleteRequest {
+	required int32 uid = 1;
+	required string domain = 2;
+}
+
+service Autocompleter {
+        rpc AddUsers(Users) returns(Status);
+	rpc AddUser(User) returns(Status);
+	rpc Update(User) returns(Status);
+	rpc Delete(DeleteRequest) returns(Status);
+	rpc Autocomplete(AutocompleteRequest) returns(MatchedUsers);
+}
