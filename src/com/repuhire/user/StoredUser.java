@@ -105,6 +105,10 @@ public class StoredUser {
 		return user.getTimesRecommended();
 	}
 
+	public User getUser() {
+		return this.user;
+	}
+
 	public long getUid() {
 		//Not memoized
 		return user.getUid();

@@ -5004,6 +5004,418 @@ public final class Common {
     // @@protoc_insertion_point(class_scope:DeleteRequest)
   }
 
+  public interface ClearRequestOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // repeated string domains = 1;
+    java.util.List<String> getDomainsList();
+    int getDomainsCount();
+    String getDomains(int index);
+  }
+  public static final class ClearRequest extends
+      com.google.protobuf.GeneratedMessage
+      implements ClearRequestOrBuilder {
+    // Use ClearRequest.newBuilder() to construct.
+    private ClearRequest(Builder builder) {
+      super(builder);
+    }
+    private ClearRequest(boolean noInit) {}
+
+    private static final ClearRequest defaultInstance;
+    public static ClearRequest getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    @Override
+	public ClearRequest getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return Common.internal_static_ClearRequest_descriptor;
+    }
+
+    @Override
+	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return Common.internal_static_ClearRequest_fieldAccessorTable;
+    }
+
+    // repeated string domains = 1;
+    public static final int DOMAINS_FIELD_NUMBER = 1;
+    private com.google.protobuf.LazyStringList domains_;
+    @Override
+	public java.util.List<String>
+        getDomainsList() {
+      return domains_;
+    }
+    @Override
+	public int getDomainsCount() {
+      return domains_.size();
+    }
+    @Override
+	public String getDomains(int index) {
+      return domains_.get(index);
+    }
+
+    private void initFields() {
+      domains_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+    private byte memoizedIsInitialized = -1;
+    @Override
+	public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @Override
+	public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      for (int i = 0; i < domains_.size(); i++) {
+        output.writeBytes(1, domains_.getByteString(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    @Override
+	public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      {
+        int dataSize = 0;
+        for (int i = 0; i < domains_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeBytesSizeNoTag(domains_.getByteString(i));
+        }
+        size += dataSize;
+        size += 1 * getDomainsList().size();
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static Common.ClearRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static Common.ClearRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static Common.ClearRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static Common.ClearRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static Common.ClearRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static Common.ClearRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static Common.ClearRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static Common.ClearRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static Common.ClearRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static Common.ClearRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    @Override
+	public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(Common.ClearRequest prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    @Override
+	public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements Common.ClearRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return Common.internal_static_ClearRequest_descriptor;
+      }
+
+      @Override
+	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return Common.internal_static_ClearRequest_fieldAccessorTable;
+      }
+
+      // Construct using Common.ClearRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      @Override
+	public Builder clear() {
+        super.clear();
+        domains_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @Override
+	public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      @Override
+	public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return Common.ClearRequest.getDescriptor();
+      }
+
+      @Override
+	public Common.ClearRequest getDefaultInstanceForType() {
+        return Common.ClearRequest.getDefaultInstance();
+      }
+
+      @Override
+	public Common.ClearRequest build() {
+        Common.ClearRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      private Common.ClearRequest buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Common.ClearRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+
+      @Override
+	public Common.ClearRequest buildPartial() {
+        Common.ClearRequest result = new Common.ClearRequest(this);
+        int from_bitField0_ = bitField0_;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          domains_ = new com.google.protobuf.UnmodifiableLazyStringList(
+              domains_);
+          bitField0_ = (bitField0_ & ~0x00000001);
+        }
+        result.domains_ = domains_;
+        onBuilt();
+        return result;
+      }
+
+      @Override
+	public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof Common.ClearRequest) {
+          return mergeFrom((Common.ClearRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(Common.ClearRequest other) {
+        if (other == Common.ClearRequest.getDefaultInstance()) return this;
+        if (!other.domains_.isEmpty()) {
+          if (domains_.isEmpty()) {
+            domains_ = other.domains_;
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            ensureDomainsIsMutable();
+            domains_.addAll(other.domains_);
+          }
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      @Override
+	public final boolean isInitialized() {
+        return true;
+      }
+
+      @Override
+	public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              ensureDomainsIsMutable();
+              domains_.add(input.readBytes());
+              break;
+            }
+          }
+        }
+      }
+
+      private int bitField0_;
+
+      // repeated string domains = 1;
+      private com.google.protobuf.LazyStringList domains_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureDomainsIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          domains_ = new com.google.protobuf.LazyStringArrayList(domains_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+      @Override
+	public java.util.List<String>
+          getDomainsList() {
+        return java.util.Collections.unmodifiableList(domains_);
+      }
+      @Override
+	public int getDomainsCount() {
+        return domains_.size();
+      }
+      @Override
+	public String getDomains(int index) {
+        return domains_.get(index);
+      }
+      public Builder setDomains(
+          int index, String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureDomainsIsMutable();
+        domains_.set(index, value);
+        onChanged();
+        return this;
+      }
+      public Builder addDomains(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureDomainsIsMutable();
+        domains_.add(value);
+        onChanged();
+        return this;
+      }
+      public Builder addAllDomains(
+          java.lang.Iterable<String> values) {
+        ensureDomainsIsMutable();
+        super.addAll(values, domains_);
+        onChanged();
+        return this;
+      }
+      public Builder clearDomains() {
+        domains_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+      void addDomains(com.google.protobuf.ByteString value) {
+        ensureDomainsIsMutable();
+        domains_.add(value);
+        onChanged();
+      }
+
+      // @@protoc_insertion_point(builder_scope:ClearRequest)
+    }
+
+    static {
+      defaultInstance = new ClearRequest(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:ClearRequest)
+  }
+
   public static abstract class Autocompleter
       implements com.google.protobuf.Service {
     protected Autocompleter() {}
@@ -5033,6 +5445,11 @@ public final class Common {
           com.google.protobuf.RpcController controller,
           Common.AutocompleteRequest request,
           com.google.protobuf.RpcCallback<Common.MatchedUsers> done);
+
+      public abstract void clearUsers(
+          com.google.protobuf.RpcController controller,
+          Common.ClearRequest request,
+          com.google.protobuf.RpcCallback<Common.Status> done);
 
     }
 
@@ -5079,6 +5496,14 @@ public final class Common {
           impl.autocomplete(controller, request, done);
         }
 
+        @java.lang.Override
+        public  void clearUsers(
+            com.google.protobuf.RpcController controller,
+            Common.ClearRequest request,
+            com.google.protobuf.RpcCallback<Common.Status> done) {
+          impl.clearUsers(controller, request, done);
+        }
+
       };
     }
 
@@ -5113,6 +5538,8 @@ public final class Common {
               return impl.delete(controller, (Common.DeleteRequest)request);
             case 4:
               return impl.autocomplete(controller, (Common.AutocompleteRequest)request);
+            case 5:
+              return impl.clearUsers(controller, (Common.ClearRequest)request);
             default:
               throw new java.lang.AssertionError("Can't get here.");
           }
@@ -5138,6 +5565,8 @@ public final class Common {
               return Common.DeleteRequest.getDefaultInstance();
             case 4:
               return Common.AutocompleteRequest.getDefaultInstance();
+            case 5:
+              return Common.ClearRequest.getDefaultInstance();
             default:
               throw new java.lang.AssertionError("Can't get here.");
           }
@@ -5163,6 +5592,8 @@ public final class Common {
               return Common.Status.getDefaultInstance();
             case 4:
               return Common.MatchedUsers.getDefaultInstance();
+            case 5:
+              return Common.Status.getDefaultInstance();
             default:
               throw new java.lang.AssertionError("Can't get here.");
           }
@@ -5195,6 +5626,11 @@ public final class Common {
         com.google.protobuf.RpcController controller,
         Common.AutocompleteRequest request,
         com.google.protobuf.RpcCallback<Common.MatchedUsers> done);
+
+    public abstract void clearUsers(
+        com.google.protobuf.RpcController controller,
+        Common.ClearRequest request,
+        com.google.protobuf.RpcCallback<Common.Status> done);
 
     public static final
         com.google.protobuf.Descriptors.ServiceDescriptor
@@ -5245,6 +5681,11 @@ public final class Common {
             com.google.protobuf.RpcUtil.<Common.MatchedUsers>specializeCallback(
               done));
           return;
+        case 5:
+          this.clearUsers(controller, (Common.ClearRequest)request,
+            com.google.protobuf.RpcUtil.<Common.Status>specializeCallback(
+              done));
+          return;
         default:
           throw new java.lang.AssertionError("Can't get here.");
       }
@@ -5270,6 +5711,8 @@ public final class Common {
           return Common.DeleteRequest.getDefaultInstance();
         case 4:
           return Common.AutocompleteRequest.getDefaultInstance();
+        case 5:
+          return Common.ClearRequest.getDefaultInstance();
         default:
           throw new java.lang.AssertionError("Can't get here.");
       }
@@ -5295,6 +5738,8 @@ public final class Common {
           return Common.Status.getDefaultInstance();
         case 4:
           return Common.MatchedUsers.getDefaultInstance();
+        case 5:
+          return Common.Status.getDefaultInstance();
         default:
           throw new java.lang.AssertionError("Can't get here.");
       }
@@ -5395,6 +5840,22 @@ public final class Common {
             Common.MatchedUsers.class,
             Common.MatchedUsers.getDefaultInstance()));
       }
+
+      @Override
+	public  void clearUsers(
+          com.google.protobuf.RpcController controller,
+          Common.ClearRequest request,
+          com.google.protobuf.RpcCallback<Common.Status> done) {
+        channel.callMethod(
+          getDescriptor().getMethods().get(5),
+          controller,
+          request,
+          Common.Status.getDefaultInstance(),
+          com.google.protobuf.RpcUtil.generalizeCallback(
+            done,
+            Common.Status.class,
+            Common.Status.getDefaultInstance()));
+      }
     }
 
     public static BlockingInterface newBlockingStub(
@@ -5426,6 +5887,11 @@ public final class Common {
       public Common.MatchedUsers autocomplete(
           com.google.protobuf.RpcController controller,
           Common.AutocompleteRequest request)
+          throws com.google.protobuf.ServiceException;
+
+      public Common.Status clearUsers(
+          com.google.protobuf.RpcController controller,
+          Common.ClearRequest request)
           throws com.google.protobuf.ServiceException;
     }
 
@@ -5500,6 +5966,19 @@ public final class Common {
           Common.MatchedUsers.getDefaultInstance());
       }
 
+
+      @Override
+	public Common.Status clearUsers(
+          com.google.protobuf.RpcController controller,
+          Common.ClearRequest request)
+          throws com.google.protobuf.ServiceException {
+        return (Common.Status) channel.callBlockingMethod(
+          getDescriptor().getMethods().get(5),
+          controller,
+          request,
+          Common.Status.getDefaultInstance());
+      }
+
     }
   }
 
@@ -5543,6 +6022,11 @@ public final class Common {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_DeleteRequest_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_ClearRequest_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_ClearRequest_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -5566,11 +6050,13 @@ public final class Common {
       "K\n\023AutocompleteRequest\022\r\n\005typed\030\001 \002(\t\022\016\n" +
       "\006domain\030\002 \002(\t\022\025\n\rnum_responses\030\003 \002(\005\",\n\r" +
       "DeleteRequest\022\013\n\003uid\030\001 \002(\005\022\016\n\006domain\030\002 \002" +
-      "(\t2\271\001\n\rAutocompleter\022\033\n\010AddUsers\022\006.Users" +
-      "\032\007.Status\022\031\n\007AddUser\022\005.User\032\007.Status\022\030\n\006" +
-      "Update\022\005.User\032\007.Status\022!\n\006Delete\022\016.Delet" +
-      "eRequest\032\007.Status\0223\n\014Autocomplete\022\024.Auto" +
-      "completeRequest\032\r.MatchedUsersB\003\210\001\001"
+      "(\t\"\037\n\014ClearRequest\022\017\n\007domains\030\001 \003(\t2\337\001\n\r" +
+      "Autocompleter\022\033\n\010AddUsers\022\006.Users\032\007.Stat" +
+      "us\022\031\n\007AddUser\022\005.User\032\007.Status\022\030\n\006Update\022" +
+      "\005.User\032\007.Status\022!\n\006Delete\022\016.DeleteReques" +
+      "t\032\007.Status\0223\n\014Autocomplete\022\024.Autocomplet" +
+      "eRequest\032\r.MatchedUsers\022$\n\nClearUsers\022\r.",
+      "ClearRequest\032\007.StatusB\003\210\001\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -5642,6 +6128,14 @@ public final class Common {
               new java.lang.String[] { "Uid", "Domain", },
               Common.DeleteRequest.class,
               Common.DeleteRequest.Builder.class);
+          internal_static_ClearRequest_descriptor =
+            getDescriptor().getMessageTypes().get(7);
+          internal_static_ClearRequest_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_ClearRequest_descriptor,
+              new java.lang.String[] { "Domains", },
+              Common.ClearRequest.class,
+              Common.ClearRequest.Builder.class);
           return null;
         }
       };

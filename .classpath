@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="/Users/Hari/Documents/workspace/RepuHire/libs/guava-11.0.1.jar"/>
 	<classpathentry kind="lib" path="/Users/Hari/Documents/workspace/RepuHire/libs/protobuf-java-2.4.1.jar"/>
 	<classpathentry kind="lib" path="/Users/Hari/Documents/workspace/RepuHire/libs/protobuf-socket-rpc-2.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

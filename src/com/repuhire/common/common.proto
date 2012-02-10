@@ -49,10 +49,15 @@ message DeleteRequest {
 	required string domain = 2;
 }
 
+message ClearRequest {
+	repeated string domains = 1;
+}
+
 service Autocompleter {
         rpc AddUsers(Users) returns(Status);
 	rpc AddUser(User) returns(Status);
 	rpc Update(User) returns(Status);
 	rpc Delete(DeleteRequest) returns(Status);
 	rpc Autocomplete(AutocompleteRequest) returns(MatchedUsers);
+	rpc ClearUsers(ClearRequest) returns(Status);
 }

@@ -7,7 +7,9 @@ import com.google.protobuf.RpcController;
 import com.google.protobuf.ServiceException;
 import com.repuhire.common.Common.AutocompleteRequest;
 import com.repuhire.common.Common.Autocompleter.BlockingInterface;
+import com.repuhire.common.Common.ClearRequest;
 import com.repuhire.common.Common.DeleteRequest;
+import com.repuhire.common.Common.MatchedUser;
 import com.repuhire.common.Common.MatchedUsers;
 import com.repuhire.common.Common.Status;
 import com.repuhire.common.Common.User;
@@ -95,10 +97,28 @@ public class AutocompleterService implements BlockingInterface {
 	}
 
 	@Override
+	public Status clearUsers(RpcController controller, ClearRequest request)
+			throws ServiceException {
+
+		for(String domain : request.getDomainsList()) {
+			clearUsersFromDomain(new Domain(domain));
+		}
+
+		return VALID_STATUS;
+	}
+
+	@Override
 	public MatchedUsers autocomplete(RpcController controller,
 			AutocompleteRequest request) throws ServiceException {
 
+		String typedSoFar = request.getTyped();
+		Domain domain = new Domain(request.getDomain());
+		int numResponses = request.getNumResponses();
+
 		MatchedUsers.Builder matchedUsers = MatchedUsers.newBuilder();
+		for(MatchedUser matchedUser : userMap.get(domain).autocomplete(typedSoFar, numResponses)) {
+			matchedUsers.addMatchedUsers(matchedUser);
+		}
 
 		matchedUsers.setStatus(VALID_STATUS);
 		return matchedUsers.build();
@@ -167,6 +187,13 @@ public class AutocompleterService implements BlockingInterface {
 		StoredUserStructure userStore = userMap.get(domain);
 		StoredUser storedUser = userStore.getUser(user.getUid());
 		storedUser.update(user);
+	}
 
+	/***
+	 * Clears all of the users from the given domain
+	 * @param d The domain to purge users from
+	 */
+	private void clearUsersFromDomain(Domain d) {
+		userMap.remove(d);
 	}
 }
