@@ -1,0 +1,3 @@
+Run src/com/repuhire/server/Server.java
+
+For usage, check out src/com/repuhire/server/test/AutocompleterTest.java. This acts as a client.
