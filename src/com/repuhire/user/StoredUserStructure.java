@@ -114,25 +114,26 @@ public class StoredUserStructure extends HashMap<Long, StoredUser>{
 
 			for(String token : tokens) {
 
-				int firstNameIndexOf = firstName.indexOf(token), lastNameIndexOf = lastName.indexOf(token);
+				List<Integer> firstNameIndices = allIndicesOf(token, firstName);
+				List<Integer> lastNameIndices = allIndicesOf(token, lastName);
 
 				//No match
-				if(firstNameIndexOf == -1 && lastNameIndexOf == -1) {
+				if(firstNameIndices.isEmpty() && lastNameIndices.isEmpty()) {
 					foundMatchForAllTokens = false;
 					break;
 				}
 
-				if(firstNameIndexOf != -1) {
+				for(Integer firstNameIndex : firstNameIndices) {
 					HighlightIndices.Builder highlightIndexBuilder = HighlightIndices.newBuilder();
-					highlightIndexBuilder.setStart(firstNameIndexOf);
-					highlightIndexBuilder.setEnd(firstNameIndexOf + token.length());
+					highlightIndexBuilder.setStart(firstNameIndex);
+					highlightIndexBuilder.setEnd(firstNameIndex + token.length());
 					firstNameHighlightIndices.add(highlightIndexBuilder.build());
 				}
 
-				if(lastNameIndexOf != -1) {
+				for(Integer lastNameIndex : lastNameIndices) {
 					HighlightIndices.Builder highlightIndexBuilder = HighlightIndices.newBuilder();
-					highlightIndexBuilder.setStart(lastNameIndexOf);
-					highlightIndexBuilder.setEnd(lastNameIndexOf + token.length());
+					highlightIndexBuilder.setStart(lastNameIndex);
+					highlightIndexBuilder.setEnd(lastNameIndex + token.length());
 					lastNameHighlightIndices.add(highlightIndexBuilder.build());
 				}
 			}
@@ -169,6 +170,25 @@ public class StoredUserStructure extends HashMap<Long, StoredUser>{
 	}
 
 	/***
+	 * Finds all the indices of the needle in the given haystack.
+	 *
+	 * @param needle The substring to find
+	 * @param haystack The string to search through
+	 * @return A list of 0-based indices of the needle in the haystacks
+	 */
+	public static List<Integer> allIndicesOf(String needle, String haystack) {
+		List<Integer> retVal = Lists.newArrayList();
+
+		int indexOf  = haystack.indexOf(needle);
+		while(indexOf >= 0) {
+			retVal.add(indexOf);
+			indexOf = haystack.indexOf(needle, indexOf + needle.length());
+		}
+
+		return retVal;
+	}
+
+	/***
 	 * Consolidates a collection of highlight indices into a collection
 	 * of the fewest possible highlight indices which still highlight the
 	 * same thing. Example:
@@ -180,7 +200,9 @@ public class StoredUserStructure extends HashMap<Long, StoredUser>{
 	 */
 	public static void consolidateHighlightIndices(List<HighlightIndices> indices) {
 
-		List<HighlightIndices> retVal = Lists.newArrayList();
+		if(indices.isEmpty()) {
+			return;
+		}
 
 		//Sort so it's ascending on start value
 		Collections.sort(indices, new Comparator<HighlightIndices>(){
@@ -190,46 +212,42 @@ public class StoredUserStructure extends HashMap<Long, StoredUser>{
 			}
 		});
 
-		while(!indices.isEmpty()) {
+		//Take the left-most guy
+		HighlightIndices leftMost = indices.remove(0);
 
-			HighlightIndices toAdd = indices.remove(0);
+		//Walk through indices
+		ArrayList<HighlightIndices> indicesCopy = Lists.newArrayList(indices);
+		for(HighlightIndices hi : indicesCopy) {
 
-			for(HighlightIndices whatsLeft : Lists.newArrayList(indices)) {
+			int leftMostStart = leftMost.getStart();
+			int leftMostEnd = leftMost.getEnd();
 
-				//Totally consumed by toAdd, forget about this guy
-				if(toAdd.getStart() <= whatsLeft.getStart() && toAdd.getEnd() >= whatsLeft.getEnd()) {
-					indices.remove(whatsLeft);
-				}
+			int hiStart = hi.getStart();
+			int hiEnd = hi.getEnd();
 
-				//Totally consumes toAdd, modify toAdd and forget about toAdd
-				else if(whatsLeft.getStart() <= toAdd.getStart() && whatsLeft.getEnd() >= toAdd.getEnd()) {
-					indices.remove(whatsLeft);
-					toAdd = whatsLeft;
-				}
-
-				//toAdd starts lower and partially consumed by toAdd.. modify toAdd and forget about this guy
-				else if(toAdd.getStart() <= whatsLeft.getStart() && toAdd.getEnd() <= whatsLeft.getEnd()) {
-					HighlightIndices.Builder builder = HighlightIndices.newBuilder();
-					builder.setStart(toAdd.getStart());
-					builder.setEnd(whatsLeft.getEnd());
-					indices.remove(whatsLeft);
-					toAdd = builder.build();
-				}
-
-				//toAdd starts higher and partially consumed by whatsLeft.. modify toAdd and forget about this guy
-				else if(whatsLeft.getStart() <= toAdd.getStart() && whatsLeft.getEnd() <= toAdd.getEnd()) {
-					HighlightIndices.Builder builder = HighlightIndices.newBuilder();
-					builder.setStart(whatsLeft.getStart());
-					builder.setEnd(toAdd.getEnd());
-					indices.remove(whatsLeft);
-					toAdd = builder.build();
-				}
-
+			//If we're in the range..
+			if(leftMostStart <= hiStart && hiStart <= leftMostEnd) {
+				indices.remove(hi);
+				HighlightIndices.Builder hiBuilder = HighlightIndices.newBuilder();
+				hiBuilder.setStart(leftMostStart);
+				hiBuilder.setEnd(Math.max(hiEnd, leftMostEnd));
+				leftMost = hiBuilder.build();
+			} else {
+				indices.add(leftMost);
+				leftMost = hi;
 			}
-
-			retVal.add(toAdd);
 		}
 
-		indices.addAll(retVal);
+		if(!indices.contains(leftMost)) {
+			indices.add(leftMost);
+		}
+
+		//Sort so it's ascending on start value
+		Collections.sort(indices, new Comparator<HighlightIndices>(){
+			@Override
+			public int compare(HighlightIndices arg0, HighlightIndices arg1) {
+				return (new Integer(arg0.getStart())).compareTo(new Integer(arg1.getStart()));
+			}
+		});
 	}
 }

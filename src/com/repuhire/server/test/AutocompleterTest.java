@@ -23,6 +23,7 @@ import com.repuhire.common.Common.AutocompleteRequest;
 import com.repuhire.common.Common.Autocompleter;
 import com.repuhire.common.Common.Autocompleter.BlockingInterface;
 import com.repuhire.common.Common.ClearRequest;
+import com.repuhire.common.Common.DeleteRequest;
 import com.repuhire.common.Common.MatchedUser;
 import com.repuhire.common.Common.MatchedUser.HighlightIndices;
 import com.repuhire.common.Common.MatchedUsers;
@@ -42,19 +43,19 @@ public class AutocompleterTest {
 	public static void init() {
 
 		//Start the server
-		Thread t = new Thread() {
-			@Override
-			public void run() {
-				Server.main(null);
-			};
-		};
-
-		t.start();
-		try {
-			Thread.sleep(30);
-		} catch (InterruptedException ie) {
-
-		}
+//		Thread t = new Thread() {
+//			@Override
+//			public void run() {
+//				Server.main(null);
+//			};
+//		};
+//
+//		t.start();
+//		try {
+//			Thread.sleep(30);
+//		} catch (InterruptedException ie) {
+//
+//		}
 
 		// Create channel
 		RpcConnectionFactory connectionFactory = SocketRpcConnectionFactories
@@ -145,65 +146,142 @@ public class AutocompleterTest {
 		addUserToDomain("domain1", "Hari", "Seshadri", "hari.seshadri@gmail.com", 0, 2);
 		addUserToDomain("domain1", "Harmony", "Ling", "hling@gmail.com", 0, 3);
 
+		String firstUserToString = "SriHari eSeshadri 1 hseshadri@gmail.com";
+		String secondUserToString = "Hari Seshadri 2 hari.seshadri@gmail.com";
+		String thirdUserToString = "Harmony Ling 3 hling@gmail.com";
+
 		//----------------
 		//Typing "s"
 		//----------------
 
-		//Typing "s" should match srihari's first name, hari's last name
-		MatchedUsers result = service.autocomplete(rpcController, getAutocompleteRequest("domain1", "s", 5));
-		Assert.assertEquals("Did not get the correct number of entries back in autocomplete", 2, result.getMatchedUsersCount());
+		{
+			//Typing "s" should match srihari's first name, hari's last name
+			MatchedUsers result = service.autocomplete(rpcController, getAutocompleteRequest("domain1", "s", 5));
+			Assert.assertEquals("Did not get the correct number of entries back in autocomplete", 2, result.getMatchedUsersCount());
 
-		Map<String, Pair<List<HighlightIndices>, List<HighlightIndices>>> results = new HashMap<String, Pair<List<HighlightIndices>, List<HighlightIndices>>>();
-		for(MatchedUser matchedUser : result.getMatchedUsersList()) {
-			results.put(toString(matchedUser.getUser()), Pair.of(matchedUser.getFirstNameHighlightsList(), matchedUser.getLastNameHighlightsList()));
+			Map<String, Pair<List<HighlightIndices>, List<HighlightIndices>>> results = new HashMap<String, Pair<List<HighlightIndices>, List<HighlightIndices>>>();
+			for(MatchedUser matchedUser : result.getMatchedUsersList()) {
+				results.put(toString(matchedUser.getUser()), Pair.of(matchedUser.getFirstNameHighlightsList(), matchedUser.getLastNameHighlightsList()));
+			}
+
+			//The first letter of the first name & second letter of last name should be selected for srihari
+			Pair<List<HighlightIndices>, List<HighlightIndices>> firstAndLastMatches = results.get(firstUserToString);
+			List<HighlightIndices> srihariFirstNameMatches = firstAndLastMatches.getFirst();
+			List<HighlightIndices> srihariLastNameMatches = firstAndLastMatches.getSecond();
+			Assert.assertEquals(1, srihariFirstNameMatches.size());
+			Assert.assertEquals(2, srihariLastNameMatches.size());
+
+			//First letter of first name should be highlighted
+			HighlightIndices firstNameMatch = srihariFirstNameMatches.get(0);
+			Assert.assertEquals(Pair.of(0, 1), Pair.of(firstNameMatch.getStart(), firstNameMatch.getEnd()));
+
+			//Second letter of last name should be highlighted
+			HighlightIndices lastNameMatch1 = srihariLastNameMatches.get(0);
+			HighlightIndices lastNameMatch2 = srihariLastNameMatches.get(1);
+			Assert.assertEquals(Pair.of(1, 2), Pair.of(lastNameMatch1.getStart(), lastNameMatch1.getEnd()));
+			Assert.assertEquals(Pair.of(3, 4), Pair.of(lastNameMatch2.getStart(), lastNameMatch2.getEnd()));
+
+
+			//The first letter of last name should be highlighted for hari
+			firstAndLastMatches = results.get(secondUserToString);
+			List<HighlightIndices> hariFirstNameMatches = firstAndLastMatches.getFirst();
+			List<HighlightIndices> hariLastNameMatches = firstAndLastMatches.getSecond();
+			Assert.assertEquals(0, hariFirstNameMatches.size());
+			Assert.assertEquals(2, hariLastNameMatches.size());
+
+			//First letter of last name should be highlighted
+			lastNameMatch1 = hariLastNameMatches.get(0);
+			lastNameMatch2 = hariLastNameMatches.get(1);
+			Assert.assertEquals(Pair.of(0, 1), Pair.of(lastNameMatch1.getStart(), lastNameMatch1.getEnd()));
+			Assert.assertEquals(Pair.of(2, 3), Pair.of(lastNameMatch2.getStart(), lastNameMatch2.getEnd()));
+
 		}
-
-		//The first letter of the first name & second letter of last name should be selected for srihari
-		Pair<List<HighlightIndices>, List<HighlightIndices>> firstAndLastMatches = results.get("SriHari eSeshadri 1 hseshadri@gmail.com");
-		List<HighlightIndices> srihariFirstNameMatches = firstAndLastMatches.getFirst();
-		List<HighlightIndices> srihariLastNameMatches = firstAndLastMatches.getSecond();
-		Assert.assertEquals(1, srihariFirstNameMatches.size());
-		Assert.assertEquals(1, srihariLastNameMatches.size());
-
-		//First letter of first name should be highlighted
-		HighlightIndices firstNameMatch = srihariFirstNameMatches.get(0);
-		Assert.assertEquals(Pair.of(0, 1), Pair.of(firstNameMatch.getStart(), firstNameMatch.getEnd()));
-
-		//Second letter of last name should be highlighted
-		HighlightIndices lastNameMatch = srihariLastNameMatches.get(0);
-		Assert.assertEquals(Pair.of(1, 2), Pair.of(lastNameMatch.getStart(), lastNameMatch.getEnd()));
-
-
-		//The first letter of last name should be highlighted for hari
-		firstAndLastMatches = results.get("Hari Seshadri 2 hari.seshadri@gmail.com");
-		List<HighlightIndices> hariFirstNameMatches = firstAndLastMatches.getFirst();
-		List<HighlightIndices> hariLastNameMatches = firstAndLastMatches.getSecond();
-		Assert.assertEquals(0, hariFirstNameMatches.size());
-		Assert.assertEquals(1, hariLastNameMatches.size());
-
-		//First letter of last name should be highlighted
-		lastNameMatch = hariFirstNameMatches.get(0);
-		Assert.assertEquals(Pair.of(0, 1), Pair.of(lastNameMatch.getStart(), lastNameMatch.getEnd()));
-
 
 		//------------------
 		//Typing "hAr"
 		//------------------
+		{
+			MatchedUsers result = service.autocomplete(rpcController, getAutocompleteRequest("domain1", "hAr", 5));
+			Assert.assertEquals("Did not get the correct number of entries back in autocomplete", 3, result.getMatchedUsersCount());
 
+			Map<String, Pair<List<HighlightIndices>, List<HighlightIndices>>> results = new HashMap<String, Pair<List<HighlightIndices>, List<HighlightIndices>>>();
+			for(MatchedUser matchedUser : result.getMatchedUsersList()) {
+				results.put(toString(matchedUser.getUser()), Pair.of(matchedUser.getFirstNameHighlightsList(), matchedUser.getLastNameHighlightsList()));
+			}
+
+			//The first name should have "har" selected in it for srihari
+			Pair<List<HighlightIndices>, List<HighlightIndices>> firstAndLastMatches = results.get(firstUserToString);
+			List<HighlightIndices> srihariFirstNameMatches = firstAndLastMatches.getFirst();
+			List<HighlightIndices> srihariLastNameMatches = firstAndLastMatches.getSecond();
+			Assert.assertEquals(1, srihariFirstNameMatches.size());
+			Assert.assertEquals(0, srihariLastNameMatches.size());
+
+			//First letter of first name should be highlighted
+			HighlightIndices firstNameMatch = srihariFirstNameMatches.get(0);
+			Assert.assertEquals(Pair.of(3, 6), Pair.of(firstNameMatch.getStart(), firstNameMatch.getEnd()));
+
+			//The first name should have "har" selected in it for hari
+			firstAndLastMatches = results.get(secondUserToString);
+			List<HighlightIndices> hariFirstNameMatches = firstAndLastMatches.getFirst();
+			List<HighlightIndices> hariLastNameMatches = firstAndLastMatches.getSecond();
+			Assert.assertEquals(1, hariFirstNameMatches.size());
+			Assert.assertEquals(0, hariLastNameMatches.size());
+
+			//First letter of first name should be highlighted
+			firstNameMatch = hariFirstNameMatches.get(0);
+			Assert.assertEquals(Pair.of(0, 3), Pair.of(firstNameMatch.getStart(), firstNameMatch.getEnd()));
+
+			//The first name should have "har" selected in it for harmony
+			firstAndLastMatches = results.get(thirdUserToString);
+			List<HighlightIndices> harmonyFirstNameMatches = firstAndLastMatches.getFirst();
+			List<HighlightIndices> harmonyLastNameMatches = firstAndLastMatches.getSecond();
+			Assert.assertEquals(1, harmonyFirstNameMatches.size());
+			Assert.assertEquals(0, harmonyLastNameMatches.size());
+
+			//First letter of first name should be highlighted
+			firstNameMatch = harmonyFirstNameMatches.get(0);
+			Assert.assertEquals(Pair.of(0, 3), Pair.of(firstNameMatch.getStart(), firstNameMatch.getEnd()));
+		}
 
 		//------------------
 		//Typing "ri ri"
 		//------------------
+		{
+			//Typing "ri ri" should match srihari's first/last name, hari's first/last name
+			MatchedUsers result = service.autocomplete(rpcController, getAutocompleteRequest("domain1", "ri ri", 2));
+			Assert.assertEquals("Did not get the correct number of entries back in autocomplete", 2, result.getMatchedUsersCount());
 
+			Map<String, Pair<List<HighlightIndices>, List<HighlightIndices>>> results = new HashMap<String, Pair<List<HighlightIndices>, List<HighlightIndices>>>();
+			for(MatchedUser matchedUser : result.getMatchedUsersList()) {
+				results.put(toString(matchedUser.getUser()), Pair.of(matchedUser.getFirstNameHighlightsList(), matchedUser.getLastNameHighlightsList()));
+			}
 
-		//-------------------
-		//Typing "Ha y"
-		//-------------------
-	}
+			Pair<List<HighlightIndices>, List<HighlightIndices>> firstAndLastMatches = results.get(firstUserToString);
+			List<HighlightIndices> srihariFirstNameMatches = firstAndLastMatches.getFirst();
+			List<HighlightIndices> srihariLastNameMatches = firstAndLastMatches.getSecond();
+			Assert.assertEquals(2, srihariFirstNameMatches.size());
+			Assert.assertEquals(1, srihariLastNameMatches.size());
 
-	@Test
-	public void clearTest() {
+			HighlightIndices firstNameMatch1 = srihariFirstNameMatches.get(0);
+			HighlightIndices firstNameMatch2 = srihariFirstNameMatches.get(1);
+			Assert.assertEquals(Pair.of(1, 3), Pair.of(firstNameMatch1.getStart(), firstNameMatch1.getEnd()));
+			Assert.assertEquals(Pair.of(5, 7), Pair.of(firstNameMatch2.getStart(), firstNameMatch2.getEnd()));
 
+			HighlightIndices lastNameMatch = srihariLastNameMatches.get(0);
+			Assert.assertEquals(Pair.of(7, 9), Pair.of(lastNameMatch.getStart(), lastNameMatch.getEnd()));
+
+			firstAndLastMatches = results.get(secondUserToString);
+			List<HighlightIndices> hariFirstNameMatches = firstAndLastMatches.getFirst();
+			List<HighlightIndices> hariLastNameMatches = firstAndLastMatches.getSecond();
+			Assert.assertEquals(1, hariFirstNameMatches.size());
+			Assert.assertEquals(1, hariLastNameMatches.size());
+
+			firstNameMatch1 = hariFirstNameMatches.get(0);
+			Assert.assertEquals(Pair.of(2, 4), Pair.of(firstNameMatch1.getStart(), firstNameMatch1.getEnd()));
+
+			lastNameMatch = hariLastNameMatches.get(0);
+			Assert.assertEquals(Pair.of(6, 8), Pair.of(lastNameMatch.getStart(), lastNameMatch.getEnd()));
+		}
 	}
 
 	@Test
@@ -217,37 +295,33 @@ public class AutocompleterTest {
 	}
 
 	@Test
-	public void cannotAddTwoUsersOfSameUID() {
-
+	public void cannotAddTwoUsersOfSameUID() throws ServiceException {
+		clearUsersFromDomains("domain1");
+		addUserToDomain("domain1", "Joe", "Doe", "joe@joe.com", 0, 1);
+		User clone = makeUser("domain1", "Joe", "Doe", "joe@joe.com", 0, 1);
+		Assert.assertNotSame(200, service.addUser(rpcController, clone).getStatusCode());
 	}
 
 	@Test
-	public void cannotUpdateNonExistentUser() {
-
+	public void cannotUpdateNonExistentUser() throws ServiceException {
+		clearUsersFromDomains("domain1");
+		User user = makeUser("domain1", "Joe", "Doe", "joe@joe.com", 0, 1);
+		Assert.assertNotSame(200, service.update(rpcController, user).getStatusCode());
 	}
 
 	@Test
-	public void cannotRemoveNonExistentUser() {
+	public void cannotRemoveNonExistentUser() throws ServiceException {
+		clearUsersFromDomains("domain1");
+		DeleteRequest.Builder deleteBuilder = DeleteRequest.newBuilder();
+		deleteBuilder.setDomain("domain1");
+		deleteBuilder.setUid(11);
+		Assert.assertNotSame(200, service.delete(rpcController, deleteBuilder.build()).getStatusCode());
 
-	}
+		addUserToDomain("domain1", "SriHari", "eSeshadri", "hseshadri@gmail.com", 0, 1);
+		Assert.assertNotSame(200, service.delete(rpcController, deleteBuilder.build()).getStatusCode());
 
-	@Test
-	public void testFirstNameDoubleMatch() {
-
-	}
-
-	@Test
-	public void testFirstNameLastNameMatch() {
-
-	}
-
-	@Test
-	public void testLastNameOnlyMatch() {
-
-	}
-
-	@Test
-	public void testFirstNameOnlyMatch() {
+		addUserToDomain("domain1", "SriHari", "eSeshadri", "hseshadri@gmail.com", 0, 11);
+		Assert.assertSame(200, service.delete(rpcController, deleteBuilder.build()).getStatusCode());
 
 	}
 
@@ -274,6 +348,30 @@ public class AutocompleterTest {
 	}
 
 	/***
+	 * Helper which creates a user
+	 *
+	 * @param domain The domain of user
+	 * @param firstName The first name of the user
+	 * @param lastName The last name of the user
+	 * @param email The email address of the user
+	 * @param timesRecommended The number of times this user has been recommended
+	 * @param uid The UID of the user
+	 */
+	private User makeUser(String domain, String firstName, String lastName, String email, int timesRecommended, long uid){
+		User.Builder userBuilder = User.newBuilder();
+
+		userBuilder.setUid(uid);
+		userBuilder.setFirstName(firstName);
+		userBuilder.setLastName(lastName);
+		userBuilder.setDomain(domain);
+		userBuilder.setEmail(email);
+		userBuilder.setTimesRecommended(timesRecommended);
+
+		return userBuilder.build();
+	}
+
+
+	/***
 	 * Helper which adds a user to the server via RPC
 	 *
 	 * @param domain The domain to add the user to
@@ -286,16 +384,8 @@ public class AutocompleterTest {
 	 * @throws ServiceException If the call fails
 	 */
 	private void addUserToDomain(String domain, String firstName, String lastName, String email, int timesRecommended, long uid) throws ServiceException {
-		User.Builder userBuilder = User.newBuilder();
-
-		userBuilder.setUid(uid);
-		userBuilder.setFirstName(firstName);
-		userBuilder.setLastName(lastName);
-		userBuilder.setDomain(domain);
-		userBuilder.setEmail(email);
-		userBuilder.setTimesRecommended(timesRecommended);
-
-		Assert.assertEquals("User was not added successfully", 200, service.addUser(rpcController, userBuilder.build()).getStatusCode());
+		User user = makeUser(domain, firstName, lastName, email, timesRecommended, uid);
+		Assert.assertEquals("User was not added successfully", 200, service.addUser(rpcController, user).getStatusCode());
 	}
 
 	/***
