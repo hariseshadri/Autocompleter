@@ -42,11 +42,13 @@ public class AutocompleterTest {
 	@BeforeClass
 	public static void init() {
 
-		//Start the server
+		final int port = 12345;
+
+		//Start the server.. this is an absurd hack
 		Thread t = new Thread() {
 			@Override
 			public void run() {
-				Server.main(null);
+				Server.start(port, 10);
 			};
 		};
 
@@ -59,7 +61,7 @@ public class AutocompleterTest {
 
 		// Create channel
 		RpcConnectionFactory connectionFactory = SocketRpcConnectionFactories
-		    .createRpcConnectionFactory("localhost", Server.port);
+		    .createRpcConnectionFactory("localhost", port);
 		BlockingRpcChannel channel = RpcChannels.newBlockingRpcChannel(connectionFactory);
 
 		// Call service
