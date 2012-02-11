@@ -22,10 +22,11 @@ message MatchedUser {
 		required int32 end = 2;
 	}
 
-	repeated HighlightIndices highlights = 2;
+	repeated HighlightIndices firstNameHighlights = 2;
+	repeated HighlightIndices lastNameHighlights = 3;
 
 	//0 - 1
-	required double score = 3;
+	required double score = 4;
 }
 
 message Status {

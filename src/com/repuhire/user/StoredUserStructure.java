@@ -108,44 +108,61 @@ public class StoredUserStructure extends HashMap<Long, StoredUser>{
 			String firstName = user.getFirstName().toLowerCase();
 			String lastName = user.getLastName().toLowerCase();
 
-			List<HighlightIndices> highlightIndices = Lists.newArrayList();
+			List<HighlightIndices> firstNameHighlightIndices = Lists.newArrayList();
+			List<HighlightIndices> lastNameHighlightIndices = Lists.newArrayList();
+			boolean foundMatchForAllTokens = true;
+
 			for(String token : tokens) {
+
 				int firstNameIndexOf = firstName.indexOf(token), lastNameIndexOf = lastName.indexOf(token);
 
 				//No match
 				if(firstNameIndexOf == -1 && lastNameIndexOf == -1) {
+					foundMatchForAllTokens = false;
 					break;
-				} else if(firstNameIndexOf != -1) {
+				}
+
+				if(firstNameIndexOf != -1) {
 					HighlightIndices.Builder highlightIndexBuilder = HighlightIndices.newBuilder();
 					highlightIndexBuilder.setStart(firstNameIndexOf);
 					highlightIndexBuilder.setEnd(firstNameIndexOf + token.length());
-					highlightIndices.add(highlightIndexBuilder.build());
-				} else {
+					firstNameHighlightIndices.add(highlightIndexBuilder.build());
+				}
+
+				if(lastNameIndexOf != -1) {
 					HighlightIndices.Builder highlightIndexBuilder = HighlightIndices.newBuilder();
 					highlightIndexBuilder.setStart(lastNameIndexOf);
 					highlightIndexBuilder.setEnd(lastNameIndexOf + token.length());
-					highlightIndices.add(highlightIndexBuilder.build());
+					lastNameHighlightIndices.add(highlightIndexBuilder.build());
 				}
 			}
 
-			//If there is a match for each of the tokens.. go time!
-			if(highlightIndices.size() == tokens.size()) {
-				consolidateHighlightIndices(highlightIndices);
-				MatchedUser.Builder userBuilder = MatchedUser.newBuilder();
-
-				for(HighlightIndices hi : highlightIndices) {
-					userBuilder.addHighlights(hi);
-				}
-
-				userBuilder.setUser(user.getUser());
-				userBuilder.setScore(1);
-				retVal.add(userBuilder.build());
-
-				if(numResponses == retVal.size()) {
-					return retVal;
-				}
-
+			if(!foundMatchForAllTokens) {
+				continue;
 			}
+
+			MatchedUser.Builder userBuilder = MatchedUser.newBuilder();
+
+			//Add in first name highlights
+			consolidateHighlightIndices(firstNameHighlightIndices);
+			for(HighlightIndices hi : firstNameHighlightIndices) {
+				userBuilder.addFirstNameHighlights(hi);
+			}
+
+			//Add in last name highlights
+			consolidateHighlightIndices(lastNameHighlightIndices);
+			for(HighlightIndices hi : lastNameHighlightIndices) {
+				userBuilder.addLastNameHighlights(hi);
+			}
+
+			userBuilder.setUser(user.getUser());
+			userBuilder.setScore(1);
+			retVal.add(userBuilder.build());
+
+			if(numResponses == retVal.size()) {
+				return retVal;
+			}
+
 		}
 
 		return retVal;

@@ -1466,17 +1466,27 @@ public final class Common {
     Common.User getUser();
     Common.UserOrBuilder getUserOrBuilder();
 
-    // repeated .MatchedUser.HighlightIndices highlights = 2;
+    // repeated .MatchedUser.HighlightIndices firstNameHighlights = 2;
     java.util.List<Common.MatchedUser.HighlightIndices>
-        getHighlightsList();
-    Common.MatchedUser.HighlightIndices getHighlights(int index);
-    int getHighlightsCount();
+        getFirstNameHighlightsList();
+    Common.MatchedUser.HighlightIndices getFirstNameHighlights(int index);
+    int getFirstNameHighlightsCount();
     java.util.List<? extends Common.MatchedUser.HighlightIndicesOrBuilder>
-        getHighlightsOrBuilderList();
-    Common.MatchedUser.HighlightIndicesOrBuilder getHighlightsOrBuilder(
+        getFirstNameHighlightsOrBuilderList();
+    Common.MatchedUser.HighlightIndicesOrBuilder getFirstNameHighlightsOrBuilder(
         int index);
 
-    // required double score = 3;
+    // repeated .MatchedUser.HighlightIndices lastNameHighlights = 3;
+    java.util.List<Common.MatchedUser.HighlightIndices>
+        getLastNameHighlightsList();
+    Common.MatchedUser.HighlightIndices getLastNameHighlights(int index);
+    int getLastNameHighlightsCount();
+    java.util.List<? extends Common.MatchedUser.HighlightIndicesOrBuilder>
+        getLastNameHighlightsOrBuilderList();
+    Common.MatchedUser.HighlightIndicesOrBuilder getLastNameHighlightsOrBuilder(
+        int index);
+
+    // required double score = 4;
     boolean hasScore();
     double getScore();
   }
@@ -1963,34 +1973,60 @@ public final class Common {
       return user_;
     }
 
-    // repeated .MatchedUser.HighlightIndices highlights = 2;
-    public static final int HIGHLIGHTS_FIELD_NUMBER = 2;
-    private java.util.List<Common.MatchedUser.HighlightIndices> highlights_;
+    // repeated .MatchedUser.HighlightIndices firstNameHighlights = 2;
+    public static final int FIRSTNAMEHIGHLIGHTS_FIELD_NUMBER = 2;
+    private java.util.List<Common.MatchedUser.HighlightIndices> firstNameHighlights_;
     @Override
-	public java.util.List<Common.MatchedUser.HighlightIndices> getHighlightsList() {
-      return highlights_;
+	public java.util.List<Common.MatchedUser.HighlightIndices> getFirstNameHighlightsList() {
+      return firstNameHighlights_;
     }
     @Override
 	public java.util.List<? extends Common.MatchedUser.HighlightIndicesOrBuilder>
-        getHighlightsOrBuilderList() {
-      return highlights_;
+        getFirstNameHighlightsOrBuilderList() {
+      return firstNameHighlights_;
     }
     @Override
-	public int getHighlightsCount() {
-      return highlights_.size();
+	public int getFirstNameHighlightsCount() {
+      return firstNameHighlights_.size();
     }
     @Override
-	public Common.MatchedUser.HighlightIndices getHighlights(int index) {
-      return highlights_.get(index);
+	public Common.MatchedUser.HighlightIndices getFirstNameHighlights(int index) {
+      return firstNameHighlights_.get(index);
     }
     @Override
-	public Common.MatchedUser.HighlightIndicesOrBuilder getHighlightsOrBuilder(
+	public Common.MatchedUser.HighlightIndicesOrBuilder getFirstNameHighlightsOrBuilder(
         int index) {
-      return highlights_.get(index);
+      return firstNameHighlights_.get(index);
     }
 
-    // required double score = 3;
-    public static final int SCORE_FIELD_NUMBER = 3;
+    // repeated .MatchedUser.HighlightIndices lastNameHighlights = 3;
+    public static final int LASTNAMEHIGHLIGHTS_FIELD_NUMBER = 3;
+    private java.util.List<Common.MatchedUser.HighlightIndices> lastNameHighlights_;
+    @Override
+	public java.util.List<Common.MatchedUser.HighlightIndices> getLastNameHighlightsList() {
+      return lastNameHighlights_;
+    }
+    @Override
+	public java.util.List<? extends Common.MatchedUser.HighlightIndicesOrBuilder>
+        getLastNameHighlightsOrBuilderList() {
+      return lastNameHighlights_;
+    }
+    @Override
+	public int getLastNameHighlightsCount() {
+      return lastNameHighlights_.size();
+    }
+    @Override
+	public Common.MatchedUser.HighlightIndices getLastNameHighlights(int index) {
+      return lastNameHighlights_.get(index);
+    }
+    @Override
+	public Common.MatchedUser.HighlightIndicesOrBuilder getLastNameHighlightsOrBuilder(
+        int index) {
+      return lastNameHighlights_.get(index);
+    }
+
+    // required double score = 4;
+    public static final int SCORE_FIELD_NUMBER = 4;
     private double score_;
     @Override
 	public boolean hasScore() {
@@ -2003,7 +2039,8 @@ public final class Common {
 
     private void initFields() {
       user_ = Common.User.getDefaultInstance();
-      highlights_ = java.util.Collections.emptyList();
+      firstNameHighlights_ = java.util.Collections.emptyList();
+      lastNameHighlights_ = java.util.Collections.emptyList();
       score_ = 0D;
     }
     private byte memoizedIsInitialized = -1;
@@ -2024,8 +2061,14 @@ public final class Common {
         memoizedIsInitialized = 0;
         return false;
       }
-      for (int i = 0; i < getHighlightsCount(); i++) {
-        if (!getHighlights(i).isInitialized()) {
+      for (int i = 0; i < getFirstNameHighlightsCount(); i++) {
+        if (!getFirstNameHighlights(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      for (int i = 0; i < getLastNameHighlightsCount(); i++) {
+        if (!getLastNameHighlights(i).isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -2041,11 +2084,14 @@ public final class Common {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeMessage(1, user_);
       }
-      for (int i = 0; i < highlights_.size(); i++) {
-        output.writeMessage(2, highlights_.get(i));
+      for (int i = 0; i < firstNameHighlights_.size(); i++) {
+        output.writeMessage(2, firstNameHighlights_.get(i));
+      }
+      for (int i = 0; i < lastNameHighlights_.size(); i++) {
+        output.writeMessage(3, lastNameHighlights_.get(i));
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeDouble(3, score_);
+        output.writeDouble(4, score_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -2061,13 +2107,17 @@ public final class Common {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, user_);
       }
-      for (int i = 0; i < highlights_.size(); i++) {
+      for (int i = 0; i < firstNameHighlights_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, highlights_.get(i));
+          .computeMessageSize(2, firstNameHighlights_.get(i));
+      }
+      for (int i = 0; i < lastNameHighlights_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, lastNameHighlights_.get(i));
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(3, score_);
+          .computeDoubleSize(4, score_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2189,7 +2239,8 @@ public final class Common {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getUserFieldBuilder();
-          getHighlightsFieldBuilder();
+          getFirstNameHighlightsFieldBuilder();
+          getLastNameHighlightsFieldBuilder();
         }
       }
       private static Builder create() {
@@ -2205,14 +2256,20 @@ public final class Common {
           userBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
-        if (highlightsBuilder_ == null) {
-          highlights_ = java.util.Collections.emptyList();
+        if (firstNameHighlightsBuilder_ == null) {
+          firstNameHighlights_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000002);
         } else {
-          highlightsBuilder_.clear();
+          firstNameHighlightsBuilder_.clear();
+        }
+        if (lastNameHighlightsBuilder_ == null) {
+          lastNameHighlights_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        } else {
+          lastNameHighlightsBuilder_.clear();
         }
         score_ = 0D;
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -2264,16 +2321,25 @@ public final class Common {
         } else {
           result.user_ = userBuilder_.build();
         }
-        if (highlightsBuilder_ == null) {
+        if (firstNameHighlightsBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002)) {
-            highlights_ = java.util.Collections.unmodifiableList(highlights_);
+            firstNameHighlights_ = java.util.Collections.unmodifiableList(firstNameHighlights_);
             bitField0_ = (bitField0_ & ~0x00000002);
           }
-          result.highlights_ = highlights_;
+          result.firstNameHighlights_ = firstNameHighlights_;
         } else {
-          result.highlights_ = highlightsBuilder_.build();
+          result.firstNameHighlights_ = firstNameHighlightsBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+        if (lastNameHighlightsBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            lastNameHighlights_ = java.util.Collections.unmodifiableList(lastNameHighlights_);
+            bitField0_ = (bitField0_ & ~0x00000004);
+          }
+          result.lastNameHighlights_ = lastNameHighlights_;
+        } else {
+          result.lastNameHighlights_ = lastNameHighlightsBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000002;
         }
         result.score_ = score_;
@@ -2297,29 +2363,55 @@ public final class Common {
         if (other.hasUser()) {
           mergeUser(other.getUser());
         }
-        if (highlightsBuilder_ == null) {
-          if (!other.highlights_.isEmpty()) {
-            if (highlights_.isEmpty()) {
-              highlights_ = other.highlights_;
+        if (firstNameHighlightsBuilder_ == null) {
+          if (!other.firstNameHighlights_.isEmpty()) {
+            if (firstNameHighlights_.isEmpty()) {
+              firstNameHighlights_ = other.firstNameHighlights_;
               bitField0_ = (bitField0_ & ~0x00000002);
             } else {
-              ensureHighlightsIsMutable();
-              highlights_.addAll(other.highlights_);
+              ensureFirstNameHighlightsIsMutable();
+              firstNameHighlights_.addAll(other.firstNameHighlights_);
             }
             onChanged();
           }
         } else {
-          if (!other.highlights_.isEmpty()) {
-            if (highlightsBuilder_.isEmpty()) {
-              highlightsBuilder_.dispose();
-              highlightsBuilder_ = null;
-              highlights_ = other.highlights_;
+          if (!other.firstNameHighlights_.isEmpty()) {
+            if (firstNameHighlightsBuilder_.isEmpty()) {
+              firstNameHighlightsBuilder_.dispose();
+              firstNameHighlightsBuilder_ = null;
+              firstNameHighlights_ = other.firstNameHighlights_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              highlightsBuilder_ =
+              firstNameHighlightsBuilder_ =
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                   getHighlightsFieldBuilder() : null;
+                   getFirstNameHighlightsFieldBuilder() : null;
             } else {
-              highlightsBuilder_.addAllMessages(other.highlights_);
+              firstNameHighlightsBuilder_.addAllMessages(other.firstNameHighlights_);
+            }
+          }
+        }
+        if (lastNameHighlightsBuilder_ == null) {
+          if (!other.lastNameHighlights_.isEmpty()) {
+            if (lastNameHighlights_.isEmpty()) {
+              lastNameHighlights_ = other.lastNameHighlights_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+            } else {
+              ensureLastNameHighlightsIsMutable();
+              lastNameHighlights_.addAll(other.lastNameHighlights_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.lastNameHighlights_.isEmpty()) {
+            if (lastNameHighlightsBuilder_.isEmpty()) {
+              lastNameHighlightsBuilder_.dispose();
+              lastNameHighlightsBuilder_ = null;
+              lastNameHighlights_ = other.lastNameHighlights_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+              lastNameHighlightsBuilder_ =
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getLastNameHighlightsFieldBuilder() : null;
+            } else {
+              lastNameHighlightsBuilder_.addAllMessages(other.lastNameHighlights_);
             }
           }
         }
@@ -2344,8 +2436,14 @@ public final class Common {
 
           return false;
         }
-        for (int i = 0; i < getHighlightsCount(); i++) {
-          if (!getHighlights(i).isInitialized()) {
+        for (int i = 0; i < getFirstNameHighlightsCount(); i++) {
+          if (!getFirstNameHighlights(i).isInitialized()) {
+
+            return false;
+          }
+        }
+        for (int i = 0; i < getLastNameHighlightsCount(); i++) {
+          if (!getLastNameHighlights(i).isInitialized()) {
 
             return false;
           }
@@ -2389,11 +2487,17 @@ public final class Common {
             case 18: {
               Common.MatchedUser.HighlightIndices.Builder subBuilder = Common.MatchedUser.HighlightIndices.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
-              addHighlights(subBuilder.buildPartial());
+              addFirstNameHighlights(subBuilder.buildPartial());
               break;
             }
-            case 25: {
-              bitField0_ |= 0x00000004;
+            case 26: {
+              Common.MatchedUser.HighlightIndices.Builder subBuilder = Common.MatchedUser.HighlightIndices.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addLastNameHighlights(subBuilder.buildPartial());
+              break;
+            }
+            case 33: {
+              bitField0_ |= 0x00000008;
               score_ = input.readDouble();
               break;
             }
@@ -2496,215 +2600,406 @@ public final class Common {
         return userBuilder_;
       }
 
-      // repeated .MatchedUser.HighlightIndices highlights = 2;
-      private java.util.List<Common.MatchedUser.HighlightIndices> highlights_ =
+      // repeated .MatchedUser.HighlightIndices firstNameHighlights = 2;
+      private java.util.List<Common.MatchedUser.HighlightIndices> firstNameHighlights_ =
         java.util.Collections.emptyList();
-      private void ensureHighlightsIsMutable() {
+      private void ensureFirstNameHighlightsIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          highlights_ = new java.util.ArrayList<Common.MatchedUser.HighlightIndices>(highlights_);
+          firstNameHighlights_ = new java.util.ArrayList<Common.MatchedUser.HighlightIndices>(firstNameHighlights_);
           bitField0_ |= 0x00000002;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilder<
-          Common.MatchedUser.HighlightIndices, Common.MatchedUser.HighlightIndices.Builder, Common.MatchedUser.HighlightIndicesOrBuilder> highlightsBuilder_;
+          Common.MatchedUser.HighlightIndices, Common.MatchedUser.HighlightIndices.Builder, Common.MatchedUser.HighlightIndicesOrBuilder> firstNameHighlightsBuilder_;
 
       @Override
-	public java.util.List<Common.MatchedUser.HighlightIndices> getHighlightsList() {
-        if (highlightsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(highlights_);
+	public java.util.List<Common.MatchedUser.HighlightIndices> getFirstNameHighlightsList() {
+        if (firstNameHighlightsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(firstNameHighlights_);
         } else {
-          return highlightsBuilder_.getMessageList();
+          return firstNameHighlightsBuilder_.getMessageList();
         }
       }
       @Override
-	public int getHighlightsCount() {
-        if (highlightsBuilder_ == null) {
-          return highlights_.size();
+	public int getFirstNameHighlightsCount() {
+        if (firstNameHighlightsBuilder_ == null) {
+          return firstNameHighlights_.size();
         } else {
-          return highlightsBuilder_.getCount();
+          return firstNameHighlightsBuilder_.getCount();
         }
       }
       @Override
-	public Common.MatchedUser.HighlightIndices getHighlights(int index) {
-        if (highlightsBuilder_ == null) {
-          return highlights_.get(index);
+	public Common.MatchedUser.HighlightIndices getFirstNameHighlights(int index) {
+        if (firstNameHighlightsBuilder_ == null) {
+          return firstNameHighlights_.get(index);
         } else {
-          return highlightsBuilder_.getMessage(index);
+          return firstNameHighlightsBuilder_.getMessage(index);
         }
       }
-      public Builder setHighlights(
+      public Builder setFirstNameHighlights(
           int index, Common.MatchedUser.HighlightIndices value) {
-        if (highlightsBuilder_ == null) {
+        if (firstNameHighlightsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureHighlightsIsMutable();
-          highlights_.set(index, value);
+          ensureFirstNameHighlightsIsMutable();
+          firstNameHighlights_.set(index, value);
           onChanged();
         } else {
-          highlightsBuilder_.setMessage(index, value);
+          firstNameHighlightsBuilder_.setMessage(index, value);
         }
         return this;
       }
-      public Builder setHighlights(
+      public Builder setFirstNameHighlights(
           int index, Common.MatchedUser.HighlightIndices.Builder builderForValue) {
-        if (highlightsBuilder_ == null) {
-          ensureHighlightsIsMutable();
-          highlights_.set(index, builderForValue.build());
+        if (firstNameHighlightsBuilder_ == null) {
+          ensureFirstNameHighlightsIsMutable();
+          firstNameHighlights_.set(index, builderForValue.build());
           onChanged();
         } else {
-          highlightsBuilder_.setMessage(index, builderForValue.build());
+          firstNameHighlightsBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
-      public Builder addHighlights(Common.MatchedUser.HighlightIndices value) {
-        if (highlightsBuilder_ == null) {
+      public Builder addFirstNameHighlights(Common.MatchedUser.HighlightIndices value) {
+        if (firstNameHighlightsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureHighlightsIsMutable();
-          highlights_.add(value);
+          ensureFirstNameHighlightsIsMutable();
+          firstNameHighlights_.add(value);
           onChanged();
         } else {
-          highlightsBuilder_.addMessage(value);
+          firstNameHighlightsBuilder_.addMessage(value);
         }
         return this;
       }
-      public Builder addHighlights(
+      public Builder addFirstNameHighlights(
           int index, Common.MatchedUser.HighlightIndices value) {
-        if (highlightsBuilder_ == null) {
+        if (firstNameHighlightsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureHighlightsIsMutable();
-          highlights_.add(index, value);
+          ensureFirstNameHighlightsIsMutable();
+          firstNameHighlights_.add(index, value);
           onChanged();
         } else {
-          highlightsBuilder_.addMessage(index, value);
+          firstNameHighlightsBuilder_.addMessage(index, value);
         }
         return this;
       }
-      public Builder addHighlights(
+      public Builder addFirstNameHighlights(
           Common.MatchedUser.HighlightIndices.Builder builderForValue) {
-        if (highlightsBuilder_ == null) {
-          ensureHighlightsIsMutable();
-          highlights_.add(builderForValue.build());
+        if (firstNameHighlightsBuilder_ == null) {
+          ensureFirstNameHighlightsIsMutable();
+          firstNameHighlights_.add(builderForValue.build());
           onChanged();
         } else {
-          highlightsBuilder_.addMessage(builderForValue.build());
+          firstNameHighlightsBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
-      public Builder addHighlights(
+      public Builder addFirstNameHighlights(
           int index, Common.MatchedUser.HighlightIndices.Builder builderForValue) {
-        if (highlightsBuilder_ == null) {
-          ensureHighlightsIsMutable();
-          highlights_.add(index, builderForValue.build());
+        if (firstNameHighlightsBuilder_ == null) {
+          ensureFirstNameHighlightsIsMutable();
+          firstNameHighlights_.add(index, builderForValue.build());
           onChanged();
         } else {
-          highlightsBuilder_.addMessage(index, builderForValue.build());
+          firstNameHighlightsBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
-      public Builder addAllHighlights(
+      public Builder addAllFirstNameHighlights(
           java.lang.Iterable<? extends Common.MatchedUser.HighlightIndices> values) {
-        if (highlightsBuilder_ == null) {
-          ensureHighlightsIsMutable();
-          super.addAll(values, highlights_);
+        if (firstNameHighlightsBuilder_ == null) {
+          ensureFirstNameHighlightsIsMutable();
+          super.addAll(values, firstNameHighlights_);
           onChanged();
         } else {
-          highlightsBuilder_.addAllMessages(values);
+          firstNameHighlightsBuilder_.addAllMessages(values);
         }
         return this;
       }
-      public Builder clearHighlights() {
-        if (highlightsBuilder_ == null) {
-          highlights_ = java.util.Collections.emptyList();
+      public Builder clearFirstNameHighlights() {
+        if (firstNameHighlightsBuilder_ == null) {
+          firstNameHighlights_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000002);
           onChanged();
         } else {
-          highlightsBuilder_.clear();
+          firstNameHighlightsBuilder_.clear();
         }
         return this;
       }
-      public Builder removeHighlights(int index) {
-        if (highlightsBuilder_ == null) {
-          ensureHighlightsIsMutable();
-          highlights_.remove(index);
+      public Builder removeFirstNameHighlights(int index) {
+        if (firstNameHighlightsBuilder_ == null) {
+          ensureFirstNameHighlightsIsMutable();
+          firstNameHighlights_.remove(index);
           onChanged();
         } else {
-          highlightsBuilder_.remove(index);
+          firstNameHighlightsBuilder_.remove(index);
         }
         return this;
       }
-      public Common.MatchedUser.HighlightIndices.Builder getHighlightsBuilder(
+      public Common.MatchedUser.HighlightIndices.Builder getFirstNameHighlightsBuilder(
           int index) {
-        return getHighlightsFieldBuilder().getBuilder(index);
+        return getFirstNameHighlightsFieldBuilder().getBuilder(index);
       }
       @Override
-	public Common.MatchedUser.HighlightIndicesOrBuilder getHighlightsOrBuilder(
+	public Common.MatchedUser.HighlightIndicesOrBuilder getFirstNameHighlightsOrBuilder(
           int index) {
-        if (highlightsBuilder_ == null) {
-          return highlights_.get(index);  } else {
-          return highlightsBuilder_.getMessageOrBuilder(index);
+        if (firstNameHighlightsBuilder_ == null) {
+          return firstNameHighlights_.get(index);  } else {
+          return firstNameHighlightsBuilder_.getMessageOrBuilder(index);
         }
       }
       @Override
 	public java.util.List<? extends Common.MatchedUser.HighlightIndicesOrBuilder>
-           getHighlightsOrBuilderList() {
-        if (highlightsBuilder_ != null) {
-          return highlightsBuilder_.getMessageOrBuilderList();
+           getFirstNameHighlightsOrBuilderList() {
+        if (firstNameHighlightsBuilder_ != null) {
+          return firstNameHighlightsBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(highlights_);
+          return java.util.Collections.unmodifiableList(firstNameHighlights_);
         }
       }
-      public Common.MatchedUser.HighlightIndices.Builder addHighlightsBuilder() {
-        return getHighlightsFieldBuilder().addBuilder(
+      public Common.MatchedUser.HighlightIndices.Builder addFirstNameHighlightsBuilder() {
+        return getFirstNameHighlightsFieldBuilder().addBuilder(
             Common.MatchedUser.HighlightIndices.getDefaultInstance());
       }
-      public Common.MatchedUser.HighlightIndices.Builder addHighlightsBuilder(
+      public Common.MatchedUser.HighlightIndices.Builder addFirstNameHighlightsBuilder(
           int index) {
-        return getHighlightsFieldBuilder().addBuilder(
+        return getFirstNameHighlightsFieldBuilder().addBuilder(
             index, Common.MatchedUser.HighlightIndices.getDefaultInstance());
       }
       public java.util.List<Common.MatchedUser.HighlightIndices.Builder>
-           getHighlightsBuilderList() {
-        return getHighlightsFieldBuilder().getBuilderList();
+           getFirstNameHighlightsBuilderList() {
+        return getFirstNameHighlightsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
           Common.MatchedUser.HighlightIndices, Common.MatchedUser.HighlightIndices.Builder, Common.MatchedUser.HighlightIndicesOrBuilder>
-          getHighlightsFieldBuilder() {
-        if (highlightsBuilder_ == null) {
-          highlightsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+          getFirstNameHighlightsFieldBuilder() {
+        if (firstNameHighlightsBuilder_ == null) {
+          firstNameHighlightsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               Common.MatchedUser.HighlightIndices, Common.MatchedUser.HighlightIndices.Builder, Common.MatchedUser.HighlightIndicesOrBuilder>(
-                  highlights_,
+                  firstNameHighlights_,
                   ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
                   isClean());
-          highlights_ = null;
+          firstNameHighlights_ = null;
         }
-        return highlightsBuilder_;
+        return firstNameHighlightsBuilder_;
       }
 
-      // required double score = 3;
+      // repeated .MatchedUser.HighlightIndices lastNameHighlights = 3;
+      private java.util.List<Common.MatchedUser.HighlightIndices> lastNameHighlights_ =
+        java.util.Collections.emptyList();
+      private void ensureLastNameHighlightsIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          lastNameHighlights_ = new java.util.ArrayList<Common.MatchedUser.HighlightIndices>(lastNameHighlights_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          Common.MatchedUser.HighlightIndices, Common.MatchedUser.HighlightIndices.Builder, Common.MatchedUser.HighlightIndicesOrBuilder> lastNameHighlightsBuilder_;
+
+      @Override
+	public java.util.List<Common.MatchedUser.HighlightIndices> getLastNameHighlightsList() {
+        if (lastNameHighlightsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(lastNameHighlights_);
+        } else {
+          return lastNameHighlightsBuilder_.getMessageList();
+        }
+      }
+      @Override
+	public int getLastNameHighlightsCount() {
+        if (lastNameHighlightsBuilder_ == null) {
+          return lastNameHighlights_.size();
+        } else {
+          return lastNameHighlightsBuilder_.getCount();
+        }
+      }
+      @Override
+	public Common.MatchedUser.HighlightIndices getLastNameHighlights(int index) {
+        if (lastNameHighlightsBuilder_ == null) {
+          return lastNameHighlights_.get(index);
+        } else {
+          return lastNameHighlightsBuilder_.getMessage(index);
+        }
+      }
+      public Builder setLastNameHighlights(
+          int index, Common.MatchedUser.HighlightIndices value) {
+        if (lastNameHighlightsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureLastNameHighlightsIsMutable();
+          lastNameHighlights_.set(index, value);
+          onChanged();
+        } else {
+          lastNameHighlightsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      public Builder setLastNameHighlights(
+          int index, Common.MatchedUser.HighlightIndices.Builder builderForValue) {
+        if (lastNameHighlightsBuilder_ == null) {
+          ensureLastNameHighlightsIsMutable();
+          lastNameHighlights_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          lastNameHighlightsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addLastNameHighlights(Common.MatchedUser.HighlightIndices value) {
+        if (lastNameHighlightsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureLastNameHighlightsIsMutable();
+          lastNameHighlights_.add(value);
+          onChanged();
+        } else {
+          lastNameHighlightsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      public Builder addLastNameHighlights(
+          int index, Common.MatchedUser.HighlightIndices value) {
+        if (lastNameHighlightsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureLastNameHighlightsIsMutable();
+          lastNameHighlights_.add(index, value);
+          onChanged();
+        } else {
+          lastNameHighlightsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      public Builder addLastNameHighlights(
+          Common.MatchedUser.HighlightIndices.Builder builderForValue) {
+        if (lastNameHighlightsBuilder_ == null) {
+          ensureLastNameHighlightsIsMutable();
+          lastNameHighlights_.add(builderForValue.build());
+          onChanged();
+        } else {
+          lastNameHighlightsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addLastNameHighlights(
+          int index, Common.MatchedUser.HighlightIndices.Builder builderForValue) {
+        if (lastNameHighlightsBuilder_ == null) {
+          ensureLastNameHighlightsIsMutable();
+          lastNameHighlights_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          lastNameHighlightsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addAllLastNameHighlights(
+          java.lang.Iterable<? extends Common.MatchedUser.HighlightIndices> values) {
+        if (lastNameHighlightsBuilder_ == null) {
+          ensureLastNameHighlightsIsMutable();
+          super.addAll(values, lastNameHighlights_);
+          onChanged();
+        } else {
+          lastNameHighlightsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      public Builder clearLastNameHighlights() {
+        if (lastNameHighlightsBuilder_ == null) {
+          lastNameHighlights_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+          onChanged();
+        } else {
+          lastNameHighlightsBuilder_.clear();
+        }
+        return this;
+      }
+      public Builder removeLastNameHighlights(int index) {
+        if (lastNameHighlightsBuilder_ == null) {
+          ensureLastNameHighlightsIsMutable();
+          lastNameHighlights_.remove(index);
+          onChanged();
+        } else {
+          lastNameHighlightsBuilder_.remove(index);
+        }
+        return this;
+      }
+      public Common.MatchedUser.HighlightIndices.Builder getLastNameHighlightsBuilder(
+          int index) {
+        return getLastNameHighlightsFieldBuilder().getBuilder(index);
+      }
+      @Override
+	public Common.MatchedUser.HighlightIndicesOrBuilder getLastNameHighlightsOrBuilder(
+          int index) {
+        if (lastNameHighlightsBuilder_ == null) {
+          return lastNameHighlights_.get(index);  } else {
+          return lastNameHighlightsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      @Override
+	public java.util.List<? extends Common.MatchedUser.HighlightIndicesOrBuilder>
+           getLastNameHighlightsOrBuilderList() {
+        if (lastNameHighlightsBuilder_ != null) {
+          return lastNameHighlightsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(lastNameHighlights_);
+        }
+      }
+      public Common.MatchedUser.HighlightIndices.Builder addLastNameHighlightsBuilder() {
+        return getLastNameHighlightsFieldBuilder().addBuilder(
+            Common.MatchedUser.HighlightIndices.getDefaultInstance());
+      }
+      public Common.MatchedUser.HighlightIndices.Builder addLastNameHighlightsBuilder(
+          int index) {
+        return getLastNameHighlightsFieldBuilder().addBuilder(
+            index, Common.MatchedUser.HighlightIndices.getDefaultInstance());
+      }
+      public java.util.List<Common.MatchedUser.HighlightIndices.Builder>
+           getLastNameHighlightsBuilderList() {
+        return getLastNameHighlightsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          Common.MatchedUser.HighlightIndices, Common.MatchedUser.HighlightIndices.Builder, Common.MatchedUser.HighlightIndicesOrBuilder>
+          getLastNameHighlightsFieldBuilder() {
+        if (lastNameHighlightsBuilder_ == null) {
+          lastNameHighlightsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              Common.MatchedUser.HighlightIndices, Common.MatchedUser.HighlightIndices.Builder, Common.MatchedUser.HighlightIndicesOrBuilder>(
+                  lastNameHighlights_,
+                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  getParentForChildren(),
+                  isClean());
+          lastNameHighlights_ = null;
+        }
+        return lastNameHighlightsBuilder_;
+      }
+
+      // required double score = 4;
       private double score_ ;
       @Override
 	public boolean hasScore() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       @Override
 	public double getScore() {
         return score_;
       }
       public Builder setScore(double value) {
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         score_ = value;
         onChanged();
         return this;
       }
       public Builder clearScore() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         score_ = 0D;
         onChanged();
         return this;
@@ -6040,23 +6335,25 @@ public final class Common {
       "(\t\022\021\n\tlast_name\030\002 \002(\t\022\r\n\005email\030\003 \002(\t\022\016\n\006" +
       "domain\030\004 \002(\t\022\031\n\021times_recommended\030\005 \002(\003\022" +
       "\013\n\003uid\030\006 \002(\003\"\035\n\005Users\022\024\n\005users\030\001 \003(\0132\005.U" +
-      "ser\"\224\001\n\013MatchedUser\022\023\n\004user\030\001 \002(\0132\005.User" +
-      "\0221\n\nhighlights\030\002 \003(\0132\035.MatchedUser.Highl" +
-      "ightIndices\022\r\n\005score\030\003 \002(\001\032.\n\020HighlightI" +
-      "ndices\022\r\n\005start\030\001 \002(\005\022\013\n\003end\030\002 \002(\005\".\n\006St" +
-      "atus\022\023\n\013status_code\030\001 \002(\005\022\017\n\007message\030\002 \002" +
-      "(\t\"K\n\014MatchedUsers\022\027\n\006status\030\001 \002(\0132\007.Sta",
-      "tus\022\"\n\014matchedUsers\030\002 \003(\0132\014.MatchedUser\"" +
-      "K\n\023AutocompleteRequest\022\r\n\005typed\030\001 \002(\t\022\016\n" +
-      "\006domain\030\002 \002(\t\022\025\n\rnum_responses\030\003 \002(\005\",\n\r" +
-      "DeleteRequest\022\013\n\003uid\030\001 \002(\005\022\016\n\006domain\030\002 \002" +
-      "(\t\"\037\n\014ClearRequest\022\017\n\007domains\030\001 \003(\t2\337\001\n\r" +
-      "Autocompleter\022\033\n\010AddUsers\022\006.Users\032\007.Stat" +
-      "us\022\031\n\007AddUser\022\005.User\032\007.Status\022\030\n\006Update\022" +
-      "\005.User\032\007.Status\022!\n\006Delete\022\016.DeleteReques" +
-      "t\032\007.Status\0223\n\014Autocomplete\022\024.Autocomplet" +
-      "eRequest\032\r.MatchedUsers\022$\n\nClearUsers\022\r.",
-      "ClearRequest\032\007.StatusB\003\210\001\001"
+      "ser\"\330\001\n\013MatchedUser\022\023\n\004user\030\001 \002(\0132\005.User" +
+      "\022:\n\023firstNameHighlights\030\002 \003(\0132\035.MatchedU" +
+      "ser.HighlightIndices\0229\n\022lastNameHighligh" +
+      "ts\030\003 \003(\0132\035.MatchedUser.HighlightIndices\022" +
+      "\r\n\005score\030\004 \002(\001\032.\n\020HighlightIndices\022\r\n\005st" +
+      "art\030\001 \002(\005\022\013\n\003end\030\002 \002(\005\".\n\006Status\022\023\n\013stat",
+      "us_code\030\001 \002(\005\022\017\n\007message\030\002 \002(\t\"K\n\014Matche" +
+      "dUsers\022\027\n\006status\030\001 \002(\0132\007.Status\022\"\n\014match" +
+      "edUsers\030\002 \003(\0132\014.MatchedUser\"K\n\023Autocompl" +
+      "eteRequest\022\r\n\005typed\030\001 \002(\t\022\016\n\006domain\030\002 \002(" +
+      "\t\022\025\n\rnum_responses\030\003 \002(\005\",\n\rDeleteReques" +
+      "t\022\013\n\003uid\030\001 \002(\005\022\016\n\006domain\030\002 \002(\t\"\037\n\014ClearR" +
+      "equest\022\017\n\007domains\030\001 \003(\t2\337\001\n\rAutocomplete" +
+      "r\022\033\n\010AddUsers\022\006.Users\032\007.Status\022\031\n\007AddUse" +
+      "r\022\005.User\032\007.Status\022\030\n\006Update\022\005.User\032\007.Sta" +
+      "tus\022!\n\006Delete\022\016.DeleteRequest\032\007.Status\0223",
+      "\n\014Autocomplete\022\024.AutocompleteRequest\032\r.M" +
+      "atchedUsers\022$\n\nClearUsers\022\r.ClearRequest" +
+      "\032\007.StatusB\003\210\001\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -6085,7 +6382,7 @@ public final class Common {
           internal_static_MatchedUser_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_MatchedUser_descriptor,
-              new java.lang.String[] { "User", "Highlights", "Score", },
+              new java.lang.String[] { "User", "FirstNameHighlights", "LastNameHighlights", "Score", },
               Common.MatchedUser.class,
               Common.MatchedUser.Builder.class);
           internal_static_MatchedUser_HighlightIndices_descriptor =
