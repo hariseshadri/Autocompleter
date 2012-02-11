@@ -65,63 +65,96 @@ public class AutocompleterService implements BlockingInterface {
 	public Status addUsers(RpcController controller, Users request)
 			throws ServiceException {
 
-		int numUsers = request.getUsersCount();
+		try {
+			int numUsers = request.getUsersCount();
 
-		//TODO Improve perf by using a batch collection addAll request
-		for(int userIndex = 0; userIndex < numUsers; userIndex++) {
-			addUser(request.getUsers(userIndex));
+			//TODO Improve perf by using a batch collection addAll request
+			for(int userIndex = 0; userIndex < numUsers; userIndex++) {
+				addUser(request.getUsers(userIndex));
+			}
+
+			return VALID_STATUS;
+		} catch (Exception e) {
+			return getInvalidStatus(e, request);
 		}
-
-		return VALID_STATUS;
 	}
 
 	@Override
 	public Status addUser(RpcController controller, User request)
 			throws ServiceException {
-		addUser(request);
-		return VALID_STATUS;
+		try {
+			addUser(request);
+			return VALID_STATUS;
+		} catch (Exception e) {
+			return getInvalidStatus(e, request);
+		}
 	}
 
 	@Override
 	public Status update(RpcController controller, User request)
 			throws ServiceException {
-		updateUser(request);
-		return VALID_STATUS;
+		try {
+			updateUser(request);
+			return VALID_STATUS;
+		} catch (Exception e) {
+			return getInvalidStatus(e, request);
+		}
 	}
 
 	@Override
 	public Status delete(RpcController controller, DeleteRequest request)
 			throws ServiceException {
-		deleteUser(request.getDomain(), request.getUid());
-		return VALID_STATUS;
+		try {
+			deleteUser(request.getDomain(), request.getUid());
+			return VALID_STATUS;
+		} catch(Exception e) {
+			return getInvalidStatus(e, request);
+		}
 	}
 
 	@Override
 	public Status clearUsers(RpcController controller, ClearRequest request)
 			throws ServiceException {
 
-		for(String domain : request.getDomainsList()) {
-			clearUsersFromDomain(new Domain(domain));
-		}
+		try {
+			for(String domain : request.getDomainsList()) {
+				clearUsersFromDomain(new Domain(domain));
+			}
 
-		return VALID_STATUS;
+			return VALID_STATUS;
+		} catch (Exception e) {
+			return getInvalidStatus(e, request);
+		}
 	}
 
 	@Override
 	public MatchedUsers autocomplete(RpcController controller,
 			AutocompleteRequest request) throws ServiceException {
-
-		String typedSoFar = request.getTyped();
-		Domain domain = new Domain(request.getDomain());
-		int numResponses = request.getNumResponses();
-
 		MatchedUsers.Builder matchedUsers = MatchedUsers.newBuilder();
-		for(MatchedUser matchedUser : userMap.get(domain).autocomplete(typedSoFar, numResponses)) {
-			matchedUsers.addMatchedUsers(matchedUser);
+
+		try {
+			String typedSoFar = request.getTyped();
+			Domain domain = new Domain(request.getDomain());
+			int numResponses = request.getNumResponses();
+
+			for(MatchedUser matchedUser : userMap.get(domain).autocomplete(typedSoFar, numResponses)) {
+				matchedUsers.addMatchedUsers(matchedUser);
+			}
+
+			matchedUsers.setStatus(VALID_STATUS);
+			return matchedUsers.build();
+		} catch (Exception e) {
+			matchedUsers.setStatus(getInvalidStatus(e, request));
 		}
 
-		matchedUsers.setStatus(VALID_STATUS);
 		return matchedUsers.build();
+	}
+
+	private Status getInvalidStatus(Exception e, Object request) {
+		Status.Builder status = Status.newBuilder();
+		status.setStatusCode(500);
+		status.setMessage("RPC failed: " + e.getMessage() + " with request " + request);
+		return status.build();
 	}
 
 	/***

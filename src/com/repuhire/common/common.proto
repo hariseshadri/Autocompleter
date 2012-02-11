@@ -55,7 +55,7 @@ message ClearRequest {
 }
 
 service Autocompleter {
-        rpc AddUsers(Users) returns(Status);
+	rpc AddUsers(Users) returns(Status);
 	rpc AddUser(User) returns(Status);
 	rpc Update(User) returns(Status);
 	rpc Delete(DeleteRequest) returns(Status);

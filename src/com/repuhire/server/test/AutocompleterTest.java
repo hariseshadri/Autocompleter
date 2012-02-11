@@ -43,19 +43,19 @@ public class AutocompleterTest {
 	public static void init() {
 
 		//Start the server
-//		Thread t = new Thread() {
-//			@Override
-//			public void run() {
-//				Server.main(null);
-//			};
-//		};
-//
-//		t.start();
-//		try {
-//			Thread.sleep(30);
-//		} catch (InterruptedException ie) {
-//
-//		}
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				Server.main(null);
+			};
+		};
+
+		t.start();
+		try {
+			Thread.sleep(300);
+		} catch (InterruptedException ie) {
+
+		}
 
 		// Create channel
 		RpcConnectionFactory connectionFactory = SocketRpcConnectionFactories
@@ -321,7 +321,7 @@ public class AutocompleterTest {
 		Assert.assertNotSame(200, service.delete(rpcController, deleteBuilder.build()).getStatusCode());
 
 		addUserToDomain("domain1", "SriHari", "eSeshadri", "hseshadri@gmail.com", 0, 11);
-		Assert.assertSame(200, service.delete(rpcController, deleteBuilder.build()).getStatusCode());
+		Assert.assertEquals(200, service.delete(rpcController, deleteBuilder.build()).getStatusCode());
 
 	}
 
